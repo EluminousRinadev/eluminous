@@ -22,22 +22,6 @@ $keywords = "eLuminous portfolio, web development projects,mobile app developmen
 .error{
    color: #ff0000;
 }
-.loader{
-        display: none;
-       position: absolute;
-       top:0px;
-      right:0px;
-      width:100%;
-      height:100%;
-      background-color:#eceaea;
-      background-image:url('<?php echo SITE_URL;?>images/loader.gif');
-      background-size: 50px;
-      background-repeat:no-repeat;
-      background-position:center;
-      z-index:10000000;
-      opacity: 0.4;
-      filter: alpha(opacity=40);
-      }
 </style>
 <!-- inner_banner -->
 <section class="inner_banner">
@@ -313,32 +297,18 @@ $keywords = "eLuminous portfolio, web development projects,mobile app developmen
 				<div class="form__wrapper">
 					<img src="<?php echo SITE_URL;?>images/portfolio-collage.png" alt="Portfolio Collage" class="w-100 img-fluid" />
 					<div class="wrap">
-                  <div class="download__box" style="display:none;" id="portfolio_download__box">
-                     <h5>Download Case Studies PDF Here:</h5>
-                     <div class="form-group">
-   							<a class="btn" href="<?php echo SITE_URL;?>images/pdf-file/Case-Studies-eLuminous-Technologies.pdf" download >
-   								Download Now!
-   							</a>
+					   <h5>Get Our Recent Case Studies in Your Inbox!</h5>
+   					<div class="form">
+                     <span class="error" id="err"></span>
+   						<div class="form-group">
+   							<input type="email" name="email" id="email" class="form-control" placeholder="Email">
    						</div>
-                  </div>
-                  <div class="loader"></div>
-                  <!-- <div class="loader">
-                    <img src="<?php echo SITE_URL;?>images/loader.gif" alt="" style="width: 50px;height:50px;">
-                </div> -->
-                  <div class="form__box" id="portfolio_form__box">
-                     <h5>Get Our Recent <br/> Case Studies in Your Inbox!</h5>
-                     <div class="form">
-                        <span class="error" id="err"></span>
-                        <div class="form-group">
-                           <input type="email" name="email" id="email" class="form-control" placeholder="Email">
-                        </div>
-                        <div class="form-group">
-                           <button class="btn" name="submit" type="button" id="make_proposal" value="Submit">
-                              Submit
-                           </button>
+   						<div class="form-group">
+   							<button class="btn" name="submit" type="button" id="make_proposal" value="Submit">
+   								Submit
+   							</button>
 
-                        </div>
-                     </div>
+   						</div>
    					</div>
 					</div>
 				</div>
@@ -351,56 +321,6 @@ $keywords = "eLuminous portfolio, web development projects,mobile app developmen
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 <script>
 $(document).ready(function() {
-   
-   // On email Input Enter function For getting Case Studies
-   $(document).on("keypress", "input", function(e){
-      
-      var email = $('#email').val(); 
-      var error = '';
-      console.log(email);
-      if(email != '' && emailReg != 'NaN'){
-         var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-         var valid = emailReg.test( email ); 
-         console.log(valid);
-         if(!valid){
-            error = 'Please enter valid email';
-         }
-      }else{
-         error = 'Email field is required';
-      }
-      //console.log('error :' + error);
-      if(error == ''){
-         $('.loader').show();
-         $.ajax({
-            method: 'POST',
-            url: "<?php echo SITE_URL.'mail-portfolio-enquiry.php'; ?>",
-            data: {email:email},
-            success: function(data) {
-               $('.loader').hide();
-               $("#portfolio_form__box").hide();
-               $("#portfolio_download__box").show();
-               //var res = JSON.parse(data);
-               
-               //console.log(res);
-               //window.location = '<?php echo SITE_URL."thank-you/"; ?>';
-               /*if(res.type == "success"){
-                  window.location = '<?php echo SITE_URL."thank-you/"; ?>';
-                  
-               }else{ 
-                  $('#err').html(res.msg);
-               }*/
-               
-            }
-         });
-      }else{ 
-         $('#err').html(error);
-      }
-      
-
-   });
-
-   // On Submit Function For getting Case Studies
-
    $('#make_proposal').click(function(){
       var email = $('#email').val(); 
       var error = '';
@@ -417,23 +337,19 @@ $(document).ready(function() {
       }
       //console.log('error :' + error);
       if(error == ''){
-         // $.LoadingOverlay("show", {
-         //       background: "rgba(165, 190, 100, 0.5)"
-         // });
-         $('.loader').show();
+         $.LoadingOverlay("show", {
+               background: "rgba(165, 190, 100, 0.5)"
+         });
          $.ajax({
             method: 'POST',
             url: "<?php echo SITE_URL.'mail-portfolio-enquiry.php'; ?>",
             data: {email:email},
             success: function(data) {
-               // $.LoadingOverlay("hide");
-               $('.loader').hide();
-               $("#portfolio_form__box").hide();
-               $("#portfolio_download__box").show();
+               $.LoadingOverlay("hide");
                //var res = JSON.parse(data);
                
                //console.log(res);
-               //window.location = '<?php echo SITE_URL."thank-you/"; ?>';
+               window.location = '<?php echo SITE_URL."thank-you/"; ?>';
                /*if(res.type == "success"){
                   window.location = '<?php echo SITE_URL."thank-you/"; ?>';
                   
